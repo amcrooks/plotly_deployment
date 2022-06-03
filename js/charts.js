@@ -37,6 +37,7 @@ function buildMetadata(sample) {
     // Filter the data for the object with the desired sample number
     var resultArray = metadata.filter(sampleObj => sampleObj.id == sample);
     var result = resultArray[0];
+
     // Use d3 to select the panel with id of `#sample-metadata`
     var PANEL = d3.select("#sample-metadata");
 
@@ -68,27 +69,33 @@ function buildCharts(sample) {
 
     // 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
     var otuIds = resultForSample.otu_ids
-    console.log(otuIds)
+    var otuIdsSliced = otuIds.slice(0,10).map(otuId => 'OTU ${otuId}').reverse();
+    console.log(otuIdsSliced)
 
     var otuLables = resultForSample.otu_labels;
-    console.log(otuLables);
+    var otuLablesSliced = otuLables.slice(0,10).reverse();
+    console.log(otuLablesSliced);
 
     var sampleValues = resultForSample.sample_values;
-    console.log(sampleValues);
+    var sampleValuesSliced = sampleValues.slice(0,10).reverse();
+    console.log(sampleValuesSliced);
 
     // 7. Create the yticks for the bar chart.
     // Hint: Get the the top 10 otu_ids and map them in descending order  
     //  so the otu_ids with the most bacteria are last. 
 
-    var yticks = otuIds.slice(0,10).map(id => 'OTU ${id}').reverse();
+    var yticks = otuIds.slice(0,10).map(otuId => 'OTU ${otuId}').reverse();
 
     // 8. Create the trace for the bar chart. 
     var barData = [{
-      x: sampleValues.slice(0,10).reverse(),
-      y: yticks,
-      text: otuLables.slice(0,10).reverse(),
+      x: sampleValuesSliced,
+      y: otuIdsSliced,
+      text: otuLables,
       type:'bar',
-      orientation: 'h'
+      orientation: 'h',
+      marker: {
+        color: 'rgb(158,202,225)',
+        opacity: 0.8,}
       
     }];
     // 9. Create the layout for the bar chart. 
