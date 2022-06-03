@@ -4,6 +4,7 @@ function init() {
 
   // Use the list of sample names to populate the select options
   d3.json("samples.json").then((data) => {
+    console.log(data);
     var sampleNames = data.names;
 
     sampleNames.forEach((sample) => {
@@ -24,6 +25,7 @@ function init() {
 init();
 
 function optionChanged(newSample) {
+  console.log(newSample);
   // Fetch new data each time a new sample is selected
   buildMetadata(newSample);
   buildCharts(newSample);
